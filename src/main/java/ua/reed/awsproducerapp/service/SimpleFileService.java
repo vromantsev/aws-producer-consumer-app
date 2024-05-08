@@ -7,6 +7,7 @@ import ua.reed.awsproducerapp.dto.FileContent;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
@@ -22,7 +23,11 @@ public class SimpleFileService {
             throw new IllegalArgumentException("Content must not be null or empty!");
         }
         try {
-            Files.write(Paths.get(filePath), content.concat("/n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            Path path = Paths.get(filePath);
+            if (!Files.exists(path)) {
+                Files.createFile(path);
+            }
+            Files.write(path, content.concat("\n").getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
