@@ -5,4 +5,4 @@ spring:
 server:
   port: 8080
 file:
-  path: /mnt/efs/fs1/messages.txt
+  path: /mnt/efs/messages.txt
